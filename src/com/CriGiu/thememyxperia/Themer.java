@@ -36,15 +36,15 @@ public class Themer extends Activity {
 	Button apply, reboot;
 	DataOutputStream os;
 	File folder1, folder2, folder3, folderTmp;
-	File frameWork = new File("/sdcard/ThemeChooser/tmp/framework-res.apk");
-	File semcFrameWork = new File("/sdcard/ThemeChooser/tmp/SemcGenericUxpRes.apk");
-	File statusBar = new File("/sdcard/ThemeChooser/tmp/SystemUI.apk");
+	File frameWork = new File("/sdcard/TMX/tmp/framework-res.apk");
+	File semcFrameWork = new File("/sdcard/TMX/tmp/SemcGenericUxpRes.apk");
+	File statusBar = new File("/sdcard/TMX/tmp/SystemUI.apk");
 	ImageView screen;
 	Process p;
 	RadioButton r1, r2, r3, r4, rDefault;
 	TextView themeName;
 	String isDone;
-	String folder = "/sdcard/ThemeChooser/tmp/";
+	String folder = "/sdcard/TMX/tmp/";
 	
 	
 	@Override
@@ -62,10 +62,10 @@ public class Themer extends Activity {
 		themeName = (TextView)findViewById(R.id.tvTheme);
 		
 		//Making Core Folders
-        folder1 = new File("/sdcard/ThemeChooser/1/");
-        folder2 = new File("/sdcard/ThemeChooser/2/");
-        folder3 = new File("/sdcard/ThemeChooser/3/");
-        folderTmp = new File("/sdcard/ThemeChooser/tmp/");
+        folder1 = new File("/sdcard/TMX/1/");
+        folder2 = new File("/sdcard/TMX/2/");
+        folder3 = new File("/sdcard/TMX/3/");
+        folderTmp = new File("/sdcard/TMX/tmp/");
         folder1.mkdir();
         folder2.mkdir();
         folder3.mkdir();
@@ -79,7 +79,7 @@ public class Themer extends Activity {
 		    p = Runtime.getRuntime().exec("su");
             os = new DataOutputStream(p.getOutputStream());	
             InputStream myInput = getAssets().open("default.zip");
-		    String outFileName = "/sdcard/ThemeChooser/tmp/DefaultSEMC.zip";
+		    String outFileName = "/sdcard/TMX/tmp/DefaultSEMC.zip";
             OutputStream myOutput = new FileOutputStream(outFileName);
             byte[] buffer = new byte[1024];
             int length;
@@ -107,8 +107,8 @@ public class Themer extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				
-				File zip = new File("/sdcard/ThemeChooser/1/theme.zip");
-			    String file = "/sdcard/ThemeChooser/1/theme.zip";
+				File zip = new File("/sdcard/TMX/1/theme.zip");
+			    String file = "/sdcard/TMX/1/theme.zip";
 					if(zip.exists()){
 					try{
 
@@ -130,8 +130,8 @@ public class Themer extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				
-				File zip = new File("/sdcard/ThemeChooser/2/theme.zip");
-			    String file = "/sdcard/ThemeChooser/2/theme.zip";
+				File zip = new File("/sdcard/TMX/2/theme.zip");
+			    String file = "/sdcard/TMX/2/theme.zip";
 					if(zip.exists()){
 					try{
 						UnzipUtil a = new UnzipUtil(file, folder);
@@ -152,8 +152,8 @@ public class Themer extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				
-				File zip = new File("/sdcard/ThemeChooser/3/theme.zip");
-			    String file = "/sdcard/ThemeChooser/3/theme.zip";
+				File zip = new File("/sdcard/TMX/3/theme.zip");
+			    String file = "/sdcard/TMX/3/theme.zip";
 					if(zip.exists()){
 					try{
 						UnzipUtil a = new UnzipUtil(file, folder);
@@ -178,7 +178,7 @@ public class Themer extends Activity {
 			if (rDefault.isChecked()){
 
 					try{
-				        String file = "/sdcard/ThemeChooser/tmp/DefaultSEMC.zip";
+				        String file = "/sdcard/TMX/tmp/DefaultSEMC.zip";
 						UnzipUtil a = new UnzipUtil(file, folder);
 						a.unzip();
 						applyTheme();
@@ -237,7 +237,7 @@ public class Themer extends Activity {
     public void readProp() {
 	
     	try {
-            File myFile = new File("/sdcard/ThemeChooser/tmp/title.xml");
+            File myFile = new File("/sdcard/TMX/tmp/title.xml");
             FileInputStream fIn = new FileInputStream(myFile);
             BufferedReader myReader = new BufferedReader(
                     new InputStreamReader(fIn));
@@ -253,7 +253,7 @@ public class Themer extends Activity {
         	themeName.setText("There's no theme in there");
         	Toast.makeText(getApplicationContext(), "Sorry, no theme has been found into" + folder, Toast.LENGTH_SHORT).show();
         }
-	        Bitmap themePreview = BitmapFactory.decodeFile("/sdcard/ThemeChooser/tmp/screen.png");
+	        Bitmap themePreview = BitmapFactory.decodeFile("/sdcard/TMX/tmp/screen.png");
             screen.setImageBitmap(themePreview);
 	}
 		
@@ -263,10 +263,10 @@ public class Themer extends Activity {
 		
 		try {
             os.writeBytes("mount -o remount,rw -t yaffs2 /dev/block/mtdblock0 /system\n"
-                         + "busybox cp -f /sdcard/ThemeChooser/tmp/framework-res.apk /system/framework/framework-res.apk\n"
-                         + "busybox cp -f /sdcard/ThemeChooser/tmp/SystemUI.apk /system/app/SystemUI.apk\n"
-                         + "busybox cp -f /sdcard/ThemeChooser/tmp/SemcGenericUxpRes.apk /system/framework/SemcGenericUxpRes.apk\n"
-                         + "busybox rm -r /sdcard/ThemeChooser/tmp/\n"
+                         + "busybox cp -f /sdcard/TMX/tmp/framework-res.apk /system/framework/framework-res.apk\n"
+                         + "busybox cp -f /sdcard/TMX/tmp/SystemUI.apk /system/app/SystemUI.apk\n"
+                         + "busybox cp -f /sdcard/TMX/tmp/SemcGenericUxpRes.apk /system/framework/SemcGenericUxpRes.apk\n"
+                         + "busybox rm -r /sdcard/TMX/tmp/\n"
                          + "reboot\n");
             
 		} catch (IOException e) {
@@ -286,7 +286,7 @@ public class Themer extends Activity {
         this.pressed = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
         try {
-			os.writeBytes("busybox rm -r /sdcard/ThemeChooser/tmp/\n");
+			os.writeBytes("busybox rm -r /sdcard/TMX/tmp/\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -315,7 +315,7 @@ public class Themer extends Activity {
 		case R.id.exit:
 			
 			try {
-				os.writeBytes("busybox rm -r /sdcard/ThemeChooser/tmp/\n");
+				os.writeBytes("busybox rm -r /sdcard/TMX/tmp/\n");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
